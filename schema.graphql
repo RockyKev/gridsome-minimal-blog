@@ -1,0 +1,518 @@
+scalar Date
+
+type Doc implements Node {
+  path: String
+  fileInfo: DocFileInfo
+  content: String
+  excerpt: String
+  title: String
+  description: String
+  date(
+    """Date format"""
+    format: String
+
+    """Locale"""
+    locale: String
+  ): Date
+  headings(depth: RemarkHeadingLevels, stripTags: Boolean = true): [RemarkHeading]
+  timeToRead(
+    """Words per minute"""
+    speed: Int = 230
+  ): Int
+  fields: DocFields @deprecated(reason: "Get field on node instead.")
+  id: ID!
+  belongsTo(
+    sortBy: String = "date"
+    order: SortOrderEnum = DESC
+
+    """Defaults to 25 when page is provided."""
+    perPage: Int
+    skip: Int = 0
+    limit: Int
+    page: Int
+    sort: [SortArgument]
+
+    """Filter for Doc nodes."""
+    filter: DocBelongsToFilters
+  ): DocBelongsTo
+  _id: ID! @deprecated(reason: "Use id instead.")
+}
+
+type DocBelongsTo {
+  totalCount: Int
+  pageInfo: PageInfo!
+  edges: [DocBelongsToEdge]
+}
+
+type DocBelongsToEdge {
+  node: DocBelongsToUnion
+  next: DocBelongsToUnion
+  previous: DocBelongsToUnion
+}
+
+"""Filter DocBelongsToFilter nodes by id"""
+input DocBelongsToFilterIdFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocBelongsToFilter nodes by path"""
+input DocBelongsToFilterPathFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+input DocBelongsToFilters {
+  id: DocBelongsToFilterIdFilter
+  path: DocBelongsToFilterPathFilter
+  typeName: DocBelongsToFilterTypeName
+}
+
+"""Filter nodes by typeName."""
+input DocBelongsToFilterTypeName {
+  eq: DocBelongsToTypeNameEnum
+  ne: DocBelongsToTypeNameEnum
+  regex: String
+  in: [DocBelongsToTypeNameEnum]
+  nin: [DocBelongsToTypeNameEnum]
+}
+
+enum DocBelongsToTypeNameEnum {
+  Doc
+}
+
+union DocBelongsToUnion = Doc
+
+type DocConnection {
+  totalCount: Int
+  pageInfo: PageInfo!
+  edges: [DocEdge]
+}
+
+type DocEdge {
+  node: Doc
+  next: Doc
+  previous: Doc
+}
+
+type DocFields {
+  path: String
+  fileInfo: DocFileInfo
+  content: String
+  excerpt: String
+  title: String
+  description: String
+  date(
+    """Date format"""
+    format: String
+
+    """Locale"""
+    locale: String
+  ): Date
+}
+
+type DocFileInfo {
+  extension: String
+  directory: String
+  path: String
+  name: String
+}
+
+"""Filter DocFilter nodes by content"""
+input DocFilterContentFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by date"""
+input DocFilterDateFilter {
+  """Filter nodes by date property equal to provided date value."""
+  dteq: String
+
+  """Filter nodes by property greater than provided value."""
+  gt: String
+
+  """Filter nodes by property greater or equal to provided value."""
+  gte: String
+
+  """Filter nodes by property less than provided value."""
+  lt: String
+
+  """Filter nodes by property less than or equal to provided value."""
+  lte: String
+
+  """Filter nodes by property between provided values."""
+  between: [String]
+}
+
+"""Filter DocFilter nodes by description"""
+input DocFilterDescriptionFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by excerpt"""
+input DocFilterExcerptFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by fileInfo directory"""
+input DocFilterFileInfoDirectoryFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by fileInfo extension"""
+input DocFilterFileInfoExtensionFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+input DocFilterFileInfoFilter__Object {
+  extension: DocFilterFileInfoExtensionFilter
+  directory: DocFilterFileInfoDirectoryFilter
+  path: DocFilterFileInfoPathFilter
+  name: DocFilterFileInfoNameFilter
+}
+
+"""Filter DocFilter nodes by fileInfo name"""
+input DocFilterFileInfoNameFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by fileInfo path"""
+input DocFilterFileInfoPathFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by id"""
+input DocFilterIdFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""Filter DocFilter nodes by path"""
+input DocFilterPathFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+input DocFilters {
+  path: DocFilterPathFilter
+  fileInfo: DocFilterFileInfoFilter__Object
+  content: DocFilterContentFilter
+  excerpt: DocFilterExcerptFilter
+  title: DocFilterTitleFilter
+  description: DocFilterDescriptionFilter
+  date: DocFilterDateFilter
+  id: DocFilterIdFilter
+}
+
+"""Filter DocFilter nodes by title"""
+input DocFilterTitleFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type MetaData {
+  siteName: String
+  siteDescription: String
+  siteUrl: String
+  pathPrefix: String
+}
+
+interface Node {
+  id: ID!
+}
+
+type Page {
+  path: String
+  context: JSON
+}
+
+"""Filter PageFilter nodes by path"""
+input PageFilterPathFilter {
+  """Filter nodes which have a string property of specified length."""
+  len: Int
+
+  """Filter nodes by property of (strict) equality."""
+  eq: String
+
+  """Filter nodes by property not equal to provided value."""
+  ne: String
+
+  """Filter nodes by property matching provided regular expression."""
+  regex: String
+
+  """Filter nodes by property matching any of the provided values."""
+  in: [String]
+
+  """Filter nodes by property not matching any of the provided values."""
+  nin: [String]
+}
+
+input PageFilters {
+  path: PageFilterPathFilter
+}
+
+type PageInfo {
+  perPage: Int!
+  currentPage: Int!
+  totalPages: Int!
+  totalItems: Int!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  isFirst: Boolean!
+  isLast: Boolean!
+}
+
+type Query {
+  page(path: String!): Page
+  doc(
+    id: String
+    _id: String
+    path: String
+
+    """Will return an error if not nullable."""
+    nullable: Boolean = false
+  ): Doc
+  allPage(
+    """Filter for pages."""
+    filter: PageFilters
+  ): [Page]
+
+  """Connection to all Doc nodes"""
+  allDoc(
+    sortBy: String = "date"
+    order: SortOrderEnum = DESC
+
+    """Defaults to 25 when page is provided."""
+    perPage: Int
+    skip: Int = 0
+    limit: Int
+    page: Int
+    sort: [SortArgument]
+    regex: String
+
+    """Filter for Doc nodes."""
+    filter: DocFilters
+  ): DocConnection
+  metaData: MetaData
+}
+
+type RemarkHeading {
+  depth: Int
+  value: String
+  anchor: String
+}
+
+enum RemarkHeadingLevels {
+  h1
+  h2
+  h3
+  h4
+  h5
+  h6
+}
+
+input SortArgument {
+  by: String! = "date"
+  order: SortOrderEnum = DESC
+}
+
+enum SortOrderEnum {
+  """Sort ascending"""
+  ASC
+
+  """Sort descending"""
+  DESC
+}
+

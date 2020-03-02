@@ -5,26 +5,25 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Gridsome Blog',
-  siteDescription: 'A simple blog designed with Gridsome',
+  siteName: "Documentation Site via Gridsome",
+  siteDescription:
+    "Repuposed blog into a Documentation site designed with Gridsome",
   plugins: [
     {
-      use: '@gridsome/source-filesystem',
+      use: "@gridsome/source-filesystem",
       options: {
-        path: 'content/posts/**/*.md',
-        typeName: 'Post',
-        route: '/blog/:slug'
+        path: "content/docs/**/*.md",
+        typeName: "Doc",
+        route: "/docs/:slug"
       }
     }
   ],
   transformers: {
     //Add markdown support to all file-system sources
     remark: {
-      externalLinksTarget: '_blank',
-      externalLinksRel: ['nofollow', 'noopener', 'noreferrer'],
-      plugins: [
-        '@gridsome/remark-prismjs'
-      ]
+      externalLinksTarget: "_blank",
+      externalLinksRel: ["nofollow", "noopener", "noreferrer"],
+      plugins: ["@gridsome/remark-prismjs"]
     }
-  },
-}
+  }
+};

@@ -4,21 +4,17 @@
       <h1 v-html="$page.metaData.siteName" />
       <h2 v-html="$page.metaData.siteDescription" />
     </header>
-    <section class="docs">
-      <DocList
-        v-for="edge in $page.allDoc.edges"
-        :key="edge.node.id"
-        :doc="edge.node"
-      />
+    <section class="posts">
+      <PostList v-for="edge in $page.allPost.edges" :key="edge.node.id" :post="edge.node" />
     </section>
   </Layout>
 </template>
 
 <script>
-import DocList from "@/components/DocList";
+import PostList from "@/components/PostList";
 export default {
   components: {
-    DocList
+    PostList
   },
   metaInfo: {
     title: "A simple blog"
@@ -32,7 +28,7 @@ query {
     siteName
     siteDescription
   }
-  allDoc {
+  allPost {
     totalCount
     edges {
       node {

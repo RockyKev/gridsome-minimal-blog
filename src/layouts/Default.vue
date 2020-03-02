@@ -1,6 +1,6 @@
 <template>
   <main class="layout" role="main">
-    <slot/>
+    <slot />
     <div class="footer">
       <p>
         Built with
